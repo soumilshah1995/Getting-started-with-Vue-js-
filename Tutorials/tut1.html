@@ -5,33 +5,51 @@
     <title>Title</title>
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style>
+        #card {
+            border: 1px solid black;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 10px;
+            width: 40%;
+            text-align: center;
+        }
+        #card:hover {
+            cursor: pointer;
+            background: #ffffff;
+            box-shadow:  20px 20px 60px #d9d9d9, 
+             -20px -20px 60px #ffffff;
+             background: #bc6ff1;
+             transform: scale(1.2);
+        }
+        h3 {
+            color: red;
+            text-align: center;
+            font-size: 2rem;
+        }
+    </style>
 </head>
 
 <body>
 
     <div id="app">
         <h1>Learning vue JS {{message}}</h1>
-        <h5>{{firstName}} {{lastName}}</h5>
-        <h5>{{fullname}}</h5>
-        <p
-        v-for="language in languages"
-        style="border: 1px solid red; padding: 10px;"
-        :class="'lang-'+language.key">
-            <template>
-                <p
-                    v-if="language.key === 'python'"
-                    v-on:click="my_function(language.key)"
-                 >
-                    I love {{language.key}}
+        Regular <h3>{{firstName}} {{lastName}}</h3>
+        Computed <h3>{{fullname}}</h3>
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div id="card" @click.stop="my_function(language)" v-for="language in languages">
+                <p :class="'lang-'+language">
+                    <template>
+                        <p v-if="language === 'python'">
+                            I love <b>{{language.toUpperCase()}}</b> :P
+                        </p>
+                        <p v-else>
+                            {{language.toUpperCase()}}
+                        </p>
+                    </template>
                 </p>
-                <p v-else
-                   v-on:click="my_function(language.key)"
-                >
-                    {{language.key}}
-                </p>
-            </template>
-
-        </p>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -40,17 +58,17 @@
             data:{
                 firstName:'soumil',
                 lastName:"shah",
-                message:'Happy learning ',
-                languages:["python", 'c', "java"].map(x=>{return {key:x}})
+                message:'Happy Learning ',
+                languages:["python", 'c', "java","php","Javascript","C#","C++"]
             },
             computed:{
                 fullname(){
-                    return 'Hello ' + this.firstName + this.lastName;
+                    return 'Hello ' + this.firstName + ' ' + this.lastName;
                 }
             },
             methods:{
-                my_function:function (x){
-                    alert(x)
+                my_function:function (lang){
+                    alert(lang)
                 }
             }
         });
